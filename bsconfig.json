@@ -1,8 +1,6 @@
 {
-  "name": "reason-react-hmr-parcel",
-  "reason": {
-    "react-jsx": 3
-  },
+  "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
+  "name": "neural-network-re",
   "sources": {
     "dir" : "src",
     "subdirs" : true
@@ -14,8 +12,5 @@
   }],
   "suffix": ".bs.js",
   "namespace": true,
-  "bs-dependencies": [
-    "reason-react"
-  ],
   "refmt": 3
 }
