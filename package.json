@@ -1,5 +1,5 @@
 {
-  "name": "reason-react-hmr-parcel",
+  "name": "neural-network-re",
   "version": "0.1.0",
   "scripts": {
     "build": "bsb -make-world",
@@ -9,16 +9,11 @@
   },
   "keywords": [
     "BuckleScript",
-    "ReasonReact",
-    "reason-react",
     "parcel"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "reason-react": ">=0.9.1"
   },
   "devDependencies": {
     "bs-platform": "^7.3.2",
