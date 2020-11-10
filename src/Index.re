@@ -6,13 +6,14 @@
 // external hotAccept: unit => unit = "accept";
 
 [@bs.val] external document: Js.t({..}) = "document";
-type point = {
-  point: array(float),
+type point = array(float);
+type labelledPoint = {
+  point: point,
   actual: int
 };
 type generator = {
   weights: array(float),
-  points: array(array(float))
+  points: array(point)
 };
 let nn = () => {
   let x_max: float = 400.;
@@ -30,10 +31,47 @@ let nn = () => {
     let examples = (length) => labeller(points(length));
     ( weights, points, examples );
   };
+  let chart = (height, width) => {
+    let element = (name) =>
+      document##createElementNS("http://www.w3.org/2000/svg", name);
+
+    let svg = () => {
+      let elem = element("svg");
+      let () = elem##setAttribute("height", height);
+      let () = elem##setAttribute("width", width);
+      ();
+    };
+    let circle = (point: point, r: float, fill: string) => {
+      let [|cx, cy|] = point;
+      let elem = element("circle");
+      let () = elem##setAttribute("cx", cx);
+      let () = elem##setAttribute("cy", cy);
+      let () = elem##setAttribute("r", r);
+      let () = elem##setAttribute("fill", fill);
+      ();
+    };
+    let line = (point1: point, point2: point, stroke: string) => {
+      let [|x1, y1|] = point1;
+      let [|x2, y2|] = point2;
+      let elem = element("line");
+      let () = elem##setAttribute("x1", x1);
+      let () = elem##setAttribute("y1", y1);
+      let () = elem##setAttribute("x2", x2);
+      let () = elem##setAttribute("y2", y2);
+      let () = elem##setAttribute("stroke", stroke);
+      ();
+    };
+    ( circle, line, svg );
+  };
+
   let draw = () => {
-    let drawPointLabel = (point) =>
-      "(" ++ Js.Float.toString(point[0]) ++ ","
-        ++ Js.Float.toString(point[1]) ++ ")"
+    let drawPointLabel = (point) => {
+      // ignore non-exhaustive warning
+      // @link https://2ality.com/2018/01/lists-arrays-reasonml.html#pattern-matching-and-arrays
+      let [|x, y|] = Array.map(Js.Float.toString, point);
+      // @link https://rescript-lang.org/docs/manual/v8.0.0/overview#string--character
+      {j|($(x), $(y))|j}
+    }
     let drawP = (parent, text) => {
       let elem = document##createElement("p");
       elem##innerText #= text;
